@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>TikTok Login Callback</title>
+<style>
+body{font-family:sans-serif;max-width:600px;margin:60px auto;padding:0 20px;line-height:1.6;text-align:center;}
+.code-box{background:#f4f4f4;padding:16px;border-radius:8px;font-family:monospace;word-break:break-all;margin:20px 0;font-size:14px;}
+button{background:#fe2c55;color:white;border:none;padding:10px 20px;border-radius:6px;font-size:14px;cursor:pointer;}
+</style>
+</head>
+<body>
+<h2>เชื่อมต่อ TikTok สำเร็จแล้ว</h2>
+<p>copy โค้ดด้านล่างนี้ไปวางใน terminal ที่รอรับอยู่</p>
+<div class="code-box" id="codeBox">กำลังโหลด...</div>
+<button onclick="copyCode()">Copy โค้ด</button>
+<p id="status" style="color:green;"></p>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get("code");
+  const error = params.get("error");
+  const codeBox = document.getElementById("codeBox");
+
+  if (error) {
+    codeBox.textContent = "เกิดข้อผิดพลาด: " + error;
+  } else if (code) {
+    codeBox.textContent = code;
+  } else {
+    codeBox.textContent = "ไม่พบโค้ดใน URL — ลองล็อกอินใหม่อีกครั้ง";
+  }
+
+  function copyCode() {
+    navigator.clipboard.writeText(codeBox.textContent).then(() => {
+      document.getElementById("status").textContent = "คัดลอกแล้ว! กลับไปวางใน terminal ได้เลย";
+    });
+  }
+</script>
+</body>
+</html>
